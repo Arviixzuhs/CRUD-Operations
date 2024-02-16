@@ -1,4 +1,4 @@
-import AppTable from './components/TableUser'
+import { AppTable } from './components/TableUser'
 import './styles/main.scss'
 
 const App = () => {

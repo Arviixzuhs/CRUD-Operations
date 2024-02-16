@@ -1,51 +1,48 @@
-import { useEffect } from 'react'
+import React from 'react'
+import { capitalize } from './utils'
+import { SearchIcon } from './SearchIcon'
+import { ChevronDownIcon } from './ChevronDownIcon'
+import { VerticalDotsIcon } from './VerticalDotsIcon'
+import { CreateNewUserModal } from '../Modals/newUser'
+import { EditUserProfileModal } from '../Modals/editUser'
+import { columns, statusOptions } from './data'
+import { useDispatch, useSelector } from 'react-redux'
+import { reqDeleteUser, reqLoadUsers } from '../../api/Requests'
+import { deleteUser, setCurrentEditUserId, setUsers } from '../../features/usersSlice'
 import {
-  Button,
+  User,
   Chip,
-  ChipProps,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
   Input,
-  Pagination,
-  Selection,
-  SortDescriptor,
   Table,
+  Button,
+  TableRow,
+  Dropdown,
+  ChipProps,
+  Selection,
   TableBody,
   TableCell,
-  TableColumn,
+  Pagination,
   TableHeader,
-  TableRow,
-  User,
+  TableColumn,
+  DropdownItem,
+  DropdownMenu,
+  SortDescriptor,
+  DropdownTrigger,
 } from '@nextui-org/react'
-import React from 'react'
-import EditUserProfileModal from '../Modals/editUser'
 
-import NewUser from '../Modals/newUser'
-import { ChevronDownIcon } from './ChevronDownIcon'
-import { SearchIcon } from './SearchIcon'
-import { VerticalDotsIcon } from './VerticalDotsIcon'
-import { columns, statusOptions } from './data'
-import { capitalize } from './utils'
-import { reqLoadUsers } from '../../Api/Requests'
-import { reqDeleteUser } from '../../Api/Requests'
-import { useDispatch, useSelector } from 'react-redux'
-import { setUsers, deleteUser, setCurrentEditUserId } from '../../features/usersSlice'
-
-const statusColorMap: Record<string, ChipProps['color']> = {
-  active: 'success',
-  paused: 'danger',
-  vacation: 'warning',
-}
-
-const INITIAL_VISIBLE_COLUMNS = ['name', 'role', 'status', 'actions']
-
-export default function AppTable() {
+export const AppTable = () => {
   const dispatch = useDispatch()
   const users = useSelector((state: any) => state.users.data)
 
-  useEffect(() => {
+  const statusColorMap: Record<string, ChipProps['color']> = {
+    active: 'success',
+    paused: 'danger',
+    vacation: 'warning',
+  }
+
+  const INITIAL_VISIBLE_COLUMNS = ['name', 'role', 'status', 'actions', 'age', 'salary']
+
+  React.useEffect(() => {
     const loadAllUsers = async () => {
       const response = await reqLoadUsers()
       dispatch(setUsers(response.data))
@@ -162,9 +159,7 @@ export default function AppTable() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem onPress={() => handleSetCurrentIdEdit(user.id)}>
-                  Edit
-                </DropdownItem>
+                <DropdownItem onPress={() => handleSetCurrentIdEdit(user.id)}>Edit</DropdownItem>
                 <DropdownItem onPress={() => handleDeleteUser(user.id)}>Delete</DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -263,7 +258,7 @@ export default function AppTable() {
                   ))}
                 </DropdownMenu>
               </Dropdown>
-              <NewUser />
+              <CreateNewUserModal />
             </div>
           </div>
           <div className='flex justify-between items-center'>

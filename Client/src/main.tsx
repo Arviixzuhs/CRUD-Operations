@@ -1,10 +1,10 @@
-import React from 'react'
 import App from './App.tsx'
+import React from 'react'
 import store from './store/index.ts'
-import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom/client'
+import { Provider } from 'react-redux'
 import { NextUIProvider } from '@nextui-org/react'
-import './index.css'
+import './styles/index.scss'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

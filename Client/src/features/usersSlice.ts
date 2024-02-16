@@ -1,21 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-interface User {
-  id: String
-  name: String
-  email: String
-  salary: String
-  lastName: String
-  status: String
-  role: String
-  age: String
-  avatar: String
-}
-
 export const manageUsersSlice = createSlice({
   name: 'users',
   initialState: {
-    data: <User[]>[],
+    data: <any[]>[],
     currentUserIdEdit: -1,
   },
   reducers: {
